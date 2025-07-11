@@ -1,0 +1,88 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UObject = UnityEngine.Object;
+
+public class ResourceManager : MonoBehaviour
+{
+    internal class BundleInfo
+    {
+        public string AssetsName;
+        public string BundleName;
+        public List<string> Dependences;
+    }
+    // 存放Bundle信息
+    private Dictionary<string, BundleInfo> m_BundleInfos = new Dictionary<string, BundleInfo>();
+
+    /// <summary>
+    /// 解析版本文件
+    /// </summary>
+    private void ParseVersionFile()
+    {
+        string url = Path.Combine(PathUtil.BundleResourcePath, AppConst.FileListName);
+        string[] date = File.ReadAllLines(url);
+        for (int i = 0; i < date.Length; i++)
+        {
+            BundleInfo bundleInfo = new BundleInfo();
+            string[] info = date[i].Split('|');
+            bundleInfo.AssetsName = info[0];
+            bundleInfo.BundleName = info[1];
+            // 知道list容量的时候尽量初始化容量，避免扩容
+            bundleInfo.Dependences = new List<string>(info.Length - 2);
+            for (int j = 2; j < info.Length; j++)
+            {
+                bundleInfo.Dependences.Add(info[j]);
+            }
+            m_BundleInfos.Add(bundleInfo.AssetsName, bundleInfo);
+        }
+    }
+
+    /// <summary>
+    /// 异步加载资源
+    /// </summary>
+    /// <param name="assteName">资源名</param>
+    /// <param name="action">完成回调</param>
+    /// <returns></returns>
+    private IEnumerator LoadBundleAsync(string assteName, Action<UObject> action = null)
+    {
+        string bundleName = m_BundleInfos[assteName].BundleName;
+        string bundlePath = Path.Combine(PathUtil.BundleResourcePath, bundleName);
+        List<string> dependences = m_BundleInfos[assteName].Dependences;
+        if (dependences != null && dependences.Count > 0)
+        {
+            for (int i = 0; i < dependences.Count; i++)
+            {   // 这里加载依赖不需要资源，只加载Bundle，不需要回调
+                yield return LoadBundleAsync(dependences[i]);
+            }
+        }
+        // 把ab包加载到request.assetBundle
+        AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+        yield return request;
+
+        AssetBundleRequest bundleRequest = request.assetBundle.LoadAssetAsync(assteName);
+        yield return bundleRequest;
+
+        action?.Invoke(bundleRequest?.asset);
+    }
+
+    public void LoadAsset(string assetName, Action<UObject> action)
+    {
+        StartCoroutine(LoadBundleAsync(assetName, action));
+    }
+
+    private void Start()
+    {
+        ParseVersionFile();
+        LoadAsset("Assets/BuildResources/UI/Prefabs/TestUI.prefab", OnComplete);
+    }
+
+    private void OnComplete(UObject obj)
+    {
+        GameObject go = Instantiate(obj) as GameObject;
+        go.transform.SetParent(this.transform);
+        go.SetActive(true);
+        go.transform.localPosition = Vector3.zero;
+    }
+}
