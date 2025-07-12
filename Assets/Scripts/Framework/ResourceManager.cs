@@ -67,9 +67,26 @@ public class ResourceManager : MonoBehaviour
         action?.Invoke(bundleRequest?.asset);
     }
 
+    /// <summary>
+    /// 编辑器环境下加载资源
+    /// 为了防止编辑器环境下频繁的Build Bundle，编辑器模式下直接读取Assets目录下的资源
+    /// </summary>
+    /// <param name="assetName"></param>
+    /// <param name="action"></param>
+    void EditorLoadAsset(string assetName, Action<UObject> action = null)
+    {
+        UObject obj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetName, typeof(UObject));
+        if (obj == null)
+            Debug.LogError("资源不存在：" + assetName);
+        action?.Invoke(obj);
+    }
+
     private void LoadAsset(string assetName, Action<UObject> action)
     {
-        StartCoroutine(LoadBundleAsync(assetName, action));
+        if (AppConst.GameMode == GameMode.EditorMode)
+            EditorLoadAsset(assetName, action);
+        else
+            StartCoroutine(LoadBundleAsync(assetName, action));
     }
 
     public void LoadUI(string assetName, Action<UObject> action = null)
@@ -96,8 +113,6 @@ public class ResourceManager : MonoBehaviour
     {
         LoadAsset(PathUtil.GetScenePath(assetName), action);
     }
-
-
 
 
     private void Start()
