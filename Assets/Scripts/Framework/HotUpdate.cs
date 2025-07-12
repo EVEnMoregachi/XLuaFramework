@@ -200,8 +200,16 @@ public class HotUpdate : MonoBehaviour
 
     private void EnterGame()
     {
+        //Manager.Resource.ParseVersionFile();
+        //Manager.Resource.LoadUI("Login/LoginUI", OnComplete);
+
         Manager.Resource.ParseVersionFile();
-        Manager.Resource.LoadUI("Login/LoginUI", OnComplete);
+        Manager.Lua.Init(() =>
+        {
+            Manager.Lua.StartLua("Main");
+            XLua.LuaFunction func = Manager.Lua.LuaEnv.Global.Get<XLua.LuaFunction>("Main");
+            func.Call();
+        });
     }
 
     private void OnComplete(UnityEngine.Object obj)

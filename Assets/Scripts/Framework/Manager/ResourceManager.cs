@@ -36,6 +36,11 @@ public class ResourceManager : MonoBehaviour
                 bundleInfo.Dependences.Add(info[j]);
             }
             m_BundleInfos.Add(bundleInfo.AssetsName, bundleInfo);
+            // 找出所有的Lua脚本
+            if (info[0].IndexOf("LuaScripts") > 0)
+            {
+                Manager.Lua.LuaNames.Add(info[0]);
+            }
         }
     }
 
@@ -67,6 +72,7 @@ public class ResourceManager : MonoBehaviour
         action?.Invoke(bundleRequest?.asset);
     }
 
+#if UNITY_EDITOR
     /// <summary>
     /// 编辑器环境下加载资源
     /// 为了防止编辑器环境下频繁的Build Bundle，编辑器模式下直接读取Assets目录下的资源
@@ -80,14 +86,22 @@ public class ResourceManager : MonoBehaviour
             Debug.LogError("资源不存在：" + assetName);
         action?.Invoke(obj);
     }
+#endif
 
+    /// <summary>
+    /// 异步加载资源
+    /// </summary>
     private void LoadAsset(string assetName, Action<UObject> action)
     {
+        // 仅在 Editor 模式下直接加载资源
+#if UNITY_EDITOR
         if (AppConst.GameMode == GameMode.EditorMode)
         {
             EditorLoadAsset(assetName, action);
+            return;
         }
         else
+#endif
             StartCoroutine(LoadBundleAsync(assetName, action));
     }
 
@@ -114,5 +128,10 @@ public class ResourceManager : MonoBehaviour
     public void LoadScene (string assetName, Action<UObject> action = null)
     {
         LoadAsset(PathUtil.GetScenePath(assetName), action);
+    }
+
+    internal void LoadLua(string assetName, Action<UObject> action = null)
+    {
+        LoadAsset(assetName, action);
     }
 }

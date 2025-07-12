@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 public enum GameMode
 { 
     EditorMode,             // 编辑器模式
-    PackageMode,            // 读取ab包模式
-    UpdateMode,             // 更新模式
+    PackageMode,            // 只读目录释放资源模式
+    UpdateMode,             // 服务器更新获取资源模式
 }
 
 public class AppConst

@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PathUtil
 {
-    // 如果每次打包都使用Application.dataPath，会产生GC，这里定义后只需要访问一次
-    // 根目录
-    public static readonly string AssetsPath = Application.dataPath;
-    // 需要打Bundle的目录
-    public static readonly string BuildResoursesPath = AssetsPath + "/BuildResources/";
-    // Bundle 输出目录
-    public static readonly string BundleOutPath = Application.streamingAssetsPath;
-
     // 只读目录
     public static readonly string ReadPath = Application.streamingAssetsPath;
     // 可读写目录
     public static readonly string ReadWritePath = Application.persistentDataPath;
+    // 如果每次打包都使用Application.dataPath，会产生GC，这里定义后只需要访问一次
+    // 根目录
+    public static readonly string AssetsPath = Application.dataPath;
+    // AssetBundle 资源路径
+    public static readonly string BuildResoursesPath = AssetsPath + "/BuildResources/";
+    // Build Bundle 输出路径
+    public static readonly string BundleOutPath = Application.streamingAssetsPath;
+    // Lua脚本 目录
+    public static readonly string LuaPath = "Assets/BuildResources/LuaScripts";
+
+    
 
     // Bundle 资源目录
     public static string BundleResourcePath
