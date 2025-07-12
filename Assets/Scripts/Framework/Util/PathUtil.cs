@@ -12,13 +12,25 @@ public class PathUtil
     // Bundle 输出目录
     public static readonly string BundleOutPath = Application.streamingAssetsPath;
 
+    // 只读目录
+    public static readonly string ReadPath = Application.streamingAssetsPath;
+    // 可读写目录
+    public static readonly string ReadWritePath = Application.persistentDataPath;
+
+    // Bundle 资源目录
     public static string BundleResourcePath
     {
-        get { return Application.streamingAssetsPath; }
+        get 
+        {
+            if (AppConst.GameMode == GameMode.UpdateMode)
+                return ReadWritePath;
+            return ReadPath; 
+        
+        }
     }
 
     /// <summary>
-    /// 获取Unity的相对路径
+    /// 获取Unity资源的相对路径
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>

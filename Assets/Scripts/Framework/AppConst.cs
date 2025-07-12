@@ -18,4 +18,6 @@ public class AppConst
     public const string FileListName = "filelist.txt";
 
     public static GameMode GameMode = GameMode.EditorMode;
+    // 热更资源地址
+    public const string ResourcesUrl = "http://192.168.1.13/AssetBundles";
 }

@@ -90,13 +90,14 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Scripts\Framework\Manager\Manager.cs" />
     <Compile Include="Assets\XLua\Examples\11_RawObject\RawObjectTest.cs" />
     <Compile Include="Assets\XLua\Src\SignatureLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
-    <Compile Include="Assets\Scripts\Framework\ResourceManager.cs" />
     <Compile Include="Assets\XLua\Src\TypeExtensions.cs" />
+    <Compile Include="Assets\Scripts\Framework\Util\FileUtil.cs" />
     <Compile Include="Assets\XLua\Examples\08_Hotfix\HotfixTest2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\XLua\Src\GenAttributes.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets\XLua\Src\StaticLuaCallbacks.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\XLua\Examples\09_GenericMethod\GenericMethodExample.cs" />
+    <Compile Include="Assets\Scripts\Framework\HotUpdate.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\XLua\Examples\12_ReImplementInLua\ReImplementInLua.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Assets\XLua\Src\ObjectTranslatorPool.cs" />
     <Compile Include="Assets\XLua\Src\ObjectTranslator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+    <Compile Include="Assets\Scripts\Framework\Manager\ResourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\async_test.lua.txt" />
@@ -169,7 +172,6 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\XLua\Resources\perf\memory.lua.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\StreamingAssets\filelist.txt" />
     <None Include="Assets\XLua\Examples\03_UIEvent\ButtonInteraction.lua.txt" />
     <None Include="Assets\XLua\Examples\02_U3DScripting\LuaTestScript.lua.txt" />
     <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\message_box.lua.txt" />

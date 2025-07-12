@@ -89,6 +89,4 @@ public class BuildTool : Editor
 
         return dependence;
     }
-
 }
-

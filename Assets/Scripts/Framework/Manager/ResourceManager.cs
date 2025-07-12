@@ -19,7 +19,7 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// 解析版本文件
     /// </summary>
-    private void ParseVersionFile()
+    public void ParseVersionFile()
     {
         string url = Path.Combine(PathUtil.BundleResourcePath, AppConst.FileListName);
         string[] date = File.ReadAllLines(url);
@@ -84,7 +84,9 @@ public class ResourceManager : MonoBehaviour
     private void LoadAsset(string assetName, Action<UObject> action)
     {
         if (AppConst.GameMode == GameMode.EditorMode)
+        {
             EditorLoadAsset(assetName, action);
+        }
         else
             StartCoroutine(LoadBundleAsync(assetName, action));
     }
@@ -112,21 +114,5 @@ public class ResourceManager : MonoBehaviour
     public void LoadScene (string assetName, Action<UObject> action = null)
     {
         LoadAsset(PathUtil.GetScenePath(assetName), action);
-    }
-
-
-    private void Start()
-    {
-        ParseVersionFile();
-
-        LoadUI("Login/LoginUI", OnComplete);
-    }
-
-    private void OnComplete(UObject obj)
-    {
-        GameObject go = Instantiate(obj) as GameObject;
-        go.transform.SetParent(this.transform);
-        go.SetActive(true);
-        go.transform.localPosition = Vector3.zero;
     }
 }
