@@ -1,3 +1,6 @@
+Manager = CS.Manager
+
 function Main()
 	print("hello xLua")
+	Manager.UI:OpenUI("TestUI", "UI.TestUI")
 end
