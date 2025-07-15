@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
         {
             GameObject go = new GameObject("Group-" + group[i]);
             go.transform.SetParent(m_UIParent, false);
-            m_UIGroups.Add(group[i], go.transform);
+            m_UIGroups[group[i]] = go.transform;
         }
     }
 

@@ -25,35 +25,21 @@ public class LuaBahaviour : MonoBehaviour
         m_ScriptEnv.SetMetaTable(meta);
         meta.Dispose();
 
-        m_ScriptEnv.Set("Self", this);
-
+        // 把self注入到Lua环境
+        m_ScriptEnv.Set("self", this);
         // 想要在Awake之前将Lua脚本中的名字符串传入（luaName），除了公开一个字段在unity编辑器中绑定外无法做到，
         // 所以只能弃用Awake和Start，改用自定义的Init方法
-
-        //m_LuaEnv.DoString(Manager.Lua.GetLuaScript(luaName), luaName, m_ScriptEnv);
-        //m_ScriptEnv.Get("Awake", out m_LuaAwake);
-        //m_ScriptEnv.Get("Start", out m_LuaStart);
-        //m_ScriptEnv.Get("Update", out m_LuaUpdate);
-
-        //m_LuaAwake?.Invoke();
     }
 
     public virtual void Init(string luaName)
     {
+        // 将 Lua 脚本加载到指定的 Lua 环境中运行
         m_LuaEnv.DoString(Manager.Lua.GetLuaScript(luaName), luaName, m_ScriptEnv);
 
-        //m_ScriptEnv.Get("Awake", out m_LuaAwake);
-        //m_ScriptEnv.Get("Start", out m_LuaStart);
         m_ScriptEnv.Get("OnInit", out m_LuaInit);
         m_ScriptEnv.Get("Update", out m_LuaUpdate);
-
         m_LuaInit?.Invoke();
     }
-
-    //private void Start()
-    //{
-    //    m_LuaStart?.Invoke();
-    //}
 
     private void Update()
     {
@@ -63,8 +49,6 @@ public class LuaBahaviour : MonoBehaviour
     protected virtual void Clear()
     {
         m_LuaOnDestroy = null;
-        //m_LuaAwake = null;
-        //m_LuaStart = null;
         m_LuaInit = null;
         m_LuaUpdate = null;
         m_ScriptEnv?.Dispose();

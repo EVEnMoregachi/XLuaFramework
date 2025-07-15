@@ -27,8 +27,8 @@ public class UILogic : LuaBahaviour
 
     protected override void Clear()
     {
-        base.Clear();
         m_LuaOnOpen = null;
         m_LuaOnClose = null;
+        base.Clear();
     }
 }

@@ -134,4 +134,9 @@ public class ResourceManager : MonoBehaviour
     {
         LoadAsset(assetName, action);
     }
+
+    internal void LoadPrefab(string assetName, Action<UObject> action = null)
+    {
+        LoadAsset(assetName, action);
+    }
 }
