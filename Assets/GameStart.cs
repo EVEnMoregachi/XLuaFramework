@@ -11,15 +11,15 @@ public class GameStart : MonoBehaviour
         AppConst.GameMode = this.GameMode;
         DontDestroyOnLoad(this);
 
-        //Manager.Resource.ParseVersionFile();
-        //Manager.Lua.Init( () =>
-        //{
-        //    Manager.Lua.StartLua("Main");
-        //    XLua.LuaFunction func = Manager.Lua.LuaEnv.Global.Get<XLua.LuaFunction>("Main");
-        //    func.Call();
-        //});
-        
-
-        
+        Manager.Resource.ParseVersionFile();
+        Manager.Lua.Init(() =>
+        {
+            Manager.Lua.StartLua("Main");
+            XLua.LuaFunction func = Manager.Lua.LuaEnv.Global.Get<XLua.LuaFunction>("Main");
+            func.Call();
+        });
+        Manager.Lua.StartLua("Main");
+        XLua.LuaFunction func = Manager.Lua.LuaEnv.Global.Get<XLua.LuaFunction>("Main");
+        func.Call();
     }
 }

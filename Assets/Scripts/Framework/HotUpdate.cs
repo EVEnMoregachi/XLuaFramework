@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using XLua;
 
 public class HotUpdate : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class HotUpdate : MonoBehaviour
     /// <returns></returns>
     IEnumerator DownLoadFile(DownFileInfo info, Action<DownFileInfo> Complete)
     {
-        // 请求资源
+        // 从url请求资源
         UnityWebRequest webRequest = UnityWebRequest.Get(info.url);
         yield return webRequest.SendWebRequest();
         if (webRequest.isHttpError || webRequest.isNetworkError)
@@ -82,7 +83,7 @@ public class HotUpdate : MonoBehaviour
     private void Start()
     {
         if (IsFirstInstall())
-        {   // 如果本地有资源包，则释放资源到读写目录
+        {   // 如果只读目录有资源包，则释放资源到读写目录
             ReleaseResources();
         }
         else
@@ -109,20 +110,20 @@ public class HotUpdate : MonoBehaviour
         string url = Path.Combine(PathUtil.ReadPath, AppConst.FileListName);
         DownFileInfo info = new DownFileInfo();
         info.url = url;
-        // 下载最新filelist
+        // 根据只读目录filelist释放资源到读写目录
         StartCoroutine(DownLoadFile(info, OnDownLoadReadPathFileListComplete));
     }
 
     /// <summary>
-    /// 解析并下载获取的filelist中的资源
+    /// 解析filelist并释放资源
     /// </summary>
     private void OnDownLoadReadPathFileListComplete(DownFileInfo fileList)
     {
         // 缓存filelist的data数据
         m_ReadPathFileListData = fileList.fileData.data;
-        // 解析下载到的filelist
+        // 解析只读目录的filelist
         List<DownFileInfo> fileInfos = GetFileList(fileList.fileData.text, PathUtil.ReadPath);
-        // 下载filelist中所有文件
+        // 释放filelist中所有文件
         StartCoroutine(DownLoadFile(fileInfos, OnReleaseFileComplete, OnRelsaseAllFileComplete));
     }
 
@@ -203,13 +204,13 @@ public class HotUpdate : MonoBehaviour
         //Manager.Resource.ParseVersionFile();
         //Manager.Resource.LoadUI("Login/LoginUI", OnComplete);
 
-        Manager.Resource.ParseVersionFile();
-        Manager.Lua.Init(() =>
-        {
-            Manager.Lua.StartLua("Main");
-            XLua.LuaFunction func = Manager.Lua.LuaEnv.Global.Get<XLua.LuaFunction>("Main");
-            func.Call();
-        });
+        //Manager.Resource.ParseVersionFile();
+        //Manager.Lua.Init(() =>
+        //{
+        //    Manager.Lua.StartLua("Main");
+        //    XLua.LuaFunction func = Manager.Lua.LuaEnv.Global.Get<XLua.LuaFunction>("Main");
+        //    func.Call();
+        //});
     }
 
     private void OnComplete(UnityEngine.Object obj)

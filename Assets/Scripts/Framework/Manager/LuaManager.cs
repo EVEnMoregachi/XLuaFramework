@@ -9,7 +9,9 @@ public class LuaManager : MonoBehaviour
 {
     // 所有的Lua文件名
     public List<string> LuaNames = new List<string>();
-    // 预加载Lua脚本内容
+    /* 应为资源加载是异步的，不能加载Lua脚本资源后立即调用Lua脚本
+     * 为了实现在需要使用Lua脚本的时候能够立刻调用
+     * 所以预加载所有Lua脚本内容，使用时直接获取*/
     public Dictionary<string, byte[]> m_LuaScripts;
 
     public LuaEnv LuaEnv;
@@ -31,6 +33,9 @@ public class LuaManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 加载Lua脚本
+    /// </summary>
     public void StartLua(string name)
     {
         LuaEnv.DoString(string.Format("require '{0}'", name));
@@ -51,7 +56,7 @@ public class LuaManager : MonoBehaviour
 
         byte[] luaScript = null;
         if (!m_LuaScripts.TryGetValue(fileName, out luaScript))
-            Debug.LogError("Lua script id not exist:" + fileName);
+            Debug.LogError("Lua script is not exist:" + fileName);
         return luaScript;
     }
 
