@@ -35,8 +35,8 @@ public class BuildTool : Editor
         string[] files = Directory.GetFiles(PathUtil.BuildResoursesPath, "*", SearchOption.AllDirectories);
 
         for (int i = 0; i < files.Length; i++)
-        {   // 排除meta文件
-            if (files[i].EndsWith(".meta")) continue;
+        {   // 排除meta文件和编辑器配置文件
+            if (files[i].EndsWith(".meta") || files[i].Contains(".vscode")) continue;
 
             string filename = PathUtil.GetStandardPath(files[i]);
             Debug.Log("file:" + filename);

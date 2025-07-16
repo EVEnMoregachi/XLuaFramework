@@ -8,8 +8,8 @@ end
 
 function OnEnter()
 	print("lua OnEnter scene01")
-	Manager.Scene:LoadScene("Test02", "scene.Scene02")
-	Manager.Scene:SetActive(self.SceneName)
+	Manager.Scene:ChangeScene("Test02", "scene.Scene02")
+	--Manager.Scene:SetActive(self.SceneName)
 end
 
 function OnUpdate()

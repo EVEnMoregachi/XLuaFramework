@@ -13,6 +13,7 @@ public class EntityLogic : LuaBahaviour
         base.Init(luaName);
         m_ScriptEnv.Get("OnShow", out m_LuaOnShow);
         m_ScriptEnv.Get("OnHide", out m_LuaOnHide);
+        m_LuaInit?.Invoke();
     }
 
     public void OnShow()

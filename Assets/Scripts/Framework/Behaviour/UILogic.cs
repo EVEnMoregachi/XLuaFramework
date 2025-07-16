@@ -13,6 +13,7 @@ public class UILogic : LuaBahaviour
         base.Init(luaName);
         m_ScriptEnv.Get("OnOpen", out m_LuaOnOpen);
         m_ScriptEnv.Get("OnClose", out m_LuaOnClose);
+        m_LuaInit?.Invoke();
     }
 
     public void OnOpen()

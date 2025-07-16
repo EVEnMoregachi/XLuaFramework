@@ -9,9 +9,7 @@ public class LuaBahaviour : MonoBehaviour
     private LuaEnv m_LuaEnv = Manager.Lua.LuaEnv;
     protected LuaTable m_ScriptEnv;
 
-    //private Action m_LuaAwake;
-    //private Action m_LuaStart;
-    private Action m_LuaInit;
+    protected Action m_LuaInit;
     private Action m_LuaUpdate;
     private Action m_LuaOnDestroy;
 
@@ -38,7 +36,6 @@ public class LuaBahaviour : MonoBehaviour
 
         m_ScriptEnv.Get("OnInit", out m_LuaInit);
         m_ScriptEnv.Get("Update", out m_LuaUpdate);
-        m_LuaInit?.Invoke();
     }
 
     private void Update()

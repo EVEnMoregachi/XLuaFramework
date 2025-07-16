@@ -19,6 +19,7 @@ public class SceneLogic : LuaBahaviour
         m_ScriptEnv.Get("OnInActive", out m_LuaInActice);
         m_ScriptEnv.Get("OnEnter", out m_LuaOnEnter);
         m_ScriptEnv.Get("OnQuit", out m_LuaOnQuit);
+        m_LuaInit?.Invoke();
     }
 
     public void OnActive()
