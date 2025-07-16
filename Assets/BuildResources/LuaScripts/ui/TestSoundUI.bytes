@@ -32,7 +32,7 @@ function OnOpen()
 	end)
 
 	btn_pool_test:OnClickSet(function()
-		Manager.UI:OpenUI("Sound/TestSoundUI", "UI", "ui.TestSoundUI")
+		Manager.UI:OpenUI("Sound/TestSoundUI 1", "UI", "ui.TestSoundUI")
 	end)
 
 	btn_cloase:OnClickSet(function()

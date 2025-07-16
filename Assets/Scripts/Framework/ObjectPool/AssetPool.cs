@@ -19,8 +19,8 @@ public class AssetPool : PoolBase
         {
             if (System.DateTime.Now.Ticks - item.LastUseTime.Ticks >= m_ReleaseTime * 10000000)
             {
-                Debug.Log("AssetPool 释放时间:" + System.DateTime.Now);
-                Manager.Resource.UnLoadBundle(item.Name);
+                Debug.Log("AssetPool 释放时间:" + System.DateTime.Now + "UnLoad ab:" + item.Name);
+                Manager.Resource.UnLoadBundle(item.Objuect);
                 // 这里删除了迭代器正在迭代的元素，所以递归调用一次
                 m_Objects.Remove(item);
                 Release();

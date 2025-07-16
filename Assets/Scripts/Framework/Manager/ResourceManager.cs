@@ -13,11 +13,23 @@ public class ResourceManager : MonoBehaviour
         public string BundleName;
         public List<string> Dependences;
     }
+
+    internal class BundleDate
+    {
+        public AssetBundle Bundle;
+        // 引用计数
+        public int Count;
+        public BundleDate(AssetBundle bundle)
+        {
+            Bundle = bundle;
+            Count = 1;
+        }
+    }
     // 存放Bundle信息
     private Dictionary<string, BundleInfo> m_BundleInfos = new Dictionary<string, BundleInfo>();
 
     // 缓存AssetBundle资源
-    private Dictionary<string, AssetBundle> m_AssetBundles = new Dictionary<string, AssetBundle>();
+    private Dictionary<string, BundleDate> m_AssetBundles = new Dictionary<string, BundleDate>();
 
     /// <summary>
     /// 解析版本文件
@@ -59,22 +71,35 @@ public class ResourceManager : MonoBehaviour
         string bundlePath = Path.Combine(PathUtil.BundleResourcePath, bundleName);
         List<string> dependences = m_BundleInfos[assteName].Dependences;
 
-        // ab包只能加载一次，如果是音效资源需要多次调用，则把加载好的资源缓存起来取用
-        AssetBundle bundle = GetBundle(bundleName);
+        // ab包只能加载一次，如果是音效资源需要多次调用，则使用缓存中的
+        BundleDate bundle = GetBundle(bundleName);
+        // 缓存中没有
         if (bundle == null)
         {
-            if (dependences != null && dependences.Count > 0)
+            // 去缓存池中找
+            UObject obj = Manager.Pool.Spawn("AssetBundle", bundleName);
+            if (obj != null)
             {
-                for (int i = 0; i < dependences.Count; i++)
-                {   // 这里加载依赖不需要资源，只加载Bundle，不需要回调
-                    yield return LoadBundleAsync(dependences[i]);
-                }
+                AssetBundle ab = obj as AssetBundle;
+                bundle = new BundleDate(ab);
             }
-            // 把ab包加载到request.assetBundle
-            AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
-            yield return request;
-            bundle = request.assetBundle;
+            else
+            {// 缓存池中也没有，加载资源
+                // 把ab包加载到request.assetBundle
+                AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+                yield return request;
+                bundle = new BundleDate(request.assetBundle);
+            }
             m_AssetBundles[bundleName] = bundle;
+        }
+
+        // 加载资源依赖
+        if (dependences != null && dependences.Count > 0)
+        {
+            for (int i = 0; i < dependences.Count; i++)
+            {   // 这里加载依赖不需要资源，只加载Bundle，不需要回调
+                yield return LoadBundleAsync(dependences[i]);
+            }
         }
 
         // 场景资源不需要Asset资源，只需要加载Bundle，不需要回调asset资源
@@ -83,7 +108,12 @@ public class ResourceManager : MonoBehaviour
             action?.Invoke(null);
             yield break;
         }
-        AssetBundleRequest bundleRequest = bundle.LoadAssetAsync(assteName);
+
+        if (action == null)
+        {   // 依赖资源不需要返回资源，直接Break
+            yield break;
+        }
+        AssetBundleRequest bundleRequest = bundle.Bundle.LoadAssetAsync(assteName);
         yield return bundleRequest;
 
         action?.Invoke(bundleRequest?.asset);
@@ -92,15 +122,60 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// 已经加载过的ab包，从缓存中获取
     /// </summary>
-    AssetBundle GetBundle(string name)
+    BundleDate GetBundle(string name)
     {
-        AssetBundle bundle = null;
+        BundleDate bundle = null;
         if (m_AssetBundles.TryGetValue(name, out bundle))
         {
+            bundle.Count++;
             return bundle;
         }
         return null;
     }
+
+    /// <summary>
+    /// 减少一个Bundle的引用计数
+    /// </summary>
+    /// <param name="name"></param>
+    private void MinusOneBundleCount(string bundleName)
+    {
+        if (m_AssetBundles.TryGetValue(bundleName, out BundleDate bundle))
+        {
+            if (bundle.Count > 0)
+            {
+                bundle.Count--;
+                Debug.Log("bundle引用计数:" + bundleName + " count:" + bundle.Count);
+            }
+            if (bundle.Count <= 0)
+            {
+                Debug.Log("放入Bundle对象池：" + bundleName);
+                Manager.Pool.UnSpawn("AssetBundle", bundleName, bundle.Bundle);
+                m_AssetBundles.Remove(bundleName);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// 减少Bundle和依赖的引用计数
+    /// </summary>
+    public void MinuBundleCount(string assetName)
+    {
+        string bundleName = m_BundleInfos[assetName].BundleName;
+        MinusOneBundleCount(bundleName);
+
+        // 依赖资源
+        List<string> dependences = m_BundleInfos[assetName].Dependences;
+        if (dependences != null)
+        {
+            foreach (string dependence in dependences)
+            {
+                string name = m_BundleInfos[dependence].BundleName;
+                MinusOneBundleCount(name);
+            }
+        }
+    }
+
 
 #if UNITY_EDITOR
     /// <summary>
@@ -174,8 +249,9 @@ public class ResourceManager : MonoBehaviour
     /// 卸载资源
     /// </summary>
     /// <param name="name"></param>
-    internal void UnLoadBundle(string name)
+    internal void UnLoadBundle(UObject obj)
     {
-        
+        AssetBundle ab = obj as AssetBundle;
+        ab.Unload(true);
     }
 }

@@ -30,6 +30,10 @@ public class GameObjectPool : PoolBase
             {
                 Debug.Log("GameObjectPool 释放时间:" + System.DateTime.Now);
                 Destroy(item.Objuect);
+
+                // 减少Bundle和依赖的引用计数
+                Manager.Resource.MinuBundleCount(item.Name);
+
                 // 这里删除了迭代器正在迭代的元素，所以递归调用一次
                 m_Objects.Remove(item);
                 Release();
