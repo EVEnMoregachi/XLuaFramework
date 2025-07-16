@@ -114,6 +114,7 @@
     <Compile Include="Assets\XLua\Gen\PackUnpack.cs" />
     <Compile Include="Assets\Scripts\Framework\Manager\Manager.cs" />
     <Compile Include="Assets\XLua\Examples\11_RawObject\RawObjectTest.cs" />
+    <Compile Include="Assets\Scripts\Framework\Manager\EventManager.cs" />
     <Compile Include="Assets\XLua\Src\SignatureLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_MonoBehaviourWrap.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Assets\Scripts\Framework\Manager\SoundManager.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_RayWrap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\XLua\Gen\UnityExWrap.cs" />
     <Compile Include="Assets\XLua\Gen\System_Collections_IEnumeratorBridge.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_DebugWrap.cs" />
     <Compile Include="Assets\XLua\Src\Utils.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Assets\XLua\Src\ObjectTranslatorPool.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_ObjectWrap.cs" />
     <Compile Include="Assets\XLua\Src\ObjectTranslator.cs" />
+    <Compile Include="Assets\Scripts\Framework\Extension\UnityEx.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_Vector4Wrap.cs" />
     <Compile Include="Assets\Scripts\Framework\Manager\ResourceManager.cs" />

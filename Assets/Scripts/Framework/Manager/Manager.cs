@@ -51,12 +51,20 @@ public class Manager : MonoBehaviour
     }
 
     private static SoundManager _sound;
-
     public static SoundManager Sound
     {
         get
         {
             return _sound;
+        }
+    }
+
+    private static EventManager _event;
+    public static EventManager Event
+    {
+        get
+        {
+            return _event;
         }
     }
 
@@ -68,5 +76,6 @@ public class Manager : MonoBehaviour
         _entity = this.gameObject.AddComponent<EntityManager>();
         _scene = this.gameObject.AddComponent<MySceneManger>();
         _sound = this.gameObject.AddComponent<SoundManager>();
+        _event = this.gameObject.AddComponent<EventManager>();
     }
 }
