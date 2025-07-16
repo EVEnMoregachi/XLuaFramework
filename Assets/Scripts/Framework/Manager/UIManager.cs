@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
     // 临时UI缓存
-    Dictionary<string, GameObject> m_UI = new Dictionary<string, GameObject>();
+    //Dictionary<string, GameObject> m_UI = new Dictionary<string, GameObject>();
     // UI分组（给UI层级分组防止低层级UI覆盖在高层级UI上层）
     Dictionary<string, Transform> m_UIGroups = new Dictionary<string, Transform>();
 
@@ -42,20 +41,25 @@ public class UIManager : MonoBehaviour
     public void OpenUI(string uiName, string group, string luaName)
     {
         GameObject ui = null;
-        if (m_UI.TryGetValue(uiName, out ui))
+        Transform parent = GetUIGroup(group);
+        string uiPath = PathUtil.GetUIPath(uiName);
+        Object uiObj = Manager.Pool.Spawn("UI", uiPath);
+        // 对象池有对象
+        if (uiObj != null)
         {
+            ui = uiObj as GameObject;
+            ui.transform.SetParent(parent, false);
             UILogic uiLogic = ui.AddComponent<UILogic>();
             uiLogic.OnOpen();
             return;
         }
-
+        // 对象池没有对象
         Manager.Resource.LoadUI(uiName, (UnityEngine.Object obj) =>
         {
             ui = Instantiate(obj) as GameObject;
-            m_UI.Add(uiName, ui);
-            ui.transform.SetParent(GetUIGroup(group), false);
-
+            ui.transform.SetParent(parent, false);
             UILogic uiLogic = ui.AddComponent<UILogic>();
+            uiLogic.AssetName = uiPath;
             uiLogic.Init(luaName);
             uiLogic.OnOpen();
         });

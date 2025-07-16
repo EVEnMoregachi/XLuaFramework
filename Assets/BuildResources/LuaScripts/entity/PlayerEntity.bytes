@@ -4,16 +4,16 @@ end
 
 function OnShow()
 	print("Lua OnShow")
-	self.transform.localPosition = Vector3(0, 2, 0)
+	Self.transform.localPosition = Vector3(0, 2, 0)
 end
 
 function Update()
 	print("Lua OnUpdate")
 	if (Input.GetKey(KeyCode.W)) then
-		self.transform:Translate(self.transform.forward * Time.deltaTime * 5)
+		Self.transform:Translate(Self.transform.forward * Time.deltaTime * 5)
 	end
 	if (Input.GetKey(KeyCode.S)) then
-		self.transform:Translate(-self.transform.forward * Time.deltaTime * 5)
+		Self.transform:Translate(-Self.transform.forward * Time.deltaTime * 5)
 	end
 end
 

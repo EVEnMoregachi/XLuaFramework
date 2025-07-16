@@ -23,8 +23,8 @@ public class LuaBahaviour : MonoBehaviour
         m_ScriptEnv.SetMetaTable(meta);
         meta.Dispose();
 
-        // 把self注入到Lua环境
-        m_ScriptEnv.Set("self", this);
+        // 把Self注入到Lua环境
+        m_ScriptEnv.Set("Self", this);
         // 想要在Awake之前将Lua脚本中的名字符串传入（luaName），除了公开一个字段在unity编辑器中绑定外无法做到，
         // 所以只能弃用Awake和Start，改用自定义的Init方法
     }

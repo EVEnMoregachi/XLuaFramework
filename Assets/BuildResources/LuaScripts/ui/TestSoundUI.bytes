@@ -4,47 +4,50 @@ end
 
 function OnOpen()
 	print("Lua OnOpen")
-	local btn_play_music = self.transform:Find("Button"):GetComponent("Button")
-	local btn_stop_music = self.transform:Find("Button (1)"):GetComponent("Button")
-	local btn_pause_music = self.transform:Find("Button (2)"):GetComponent("Button")
-	local btn_unpause_music = self.transform:Find("Button (3)"):GetComponent("Button")
-	local btn_play_sound = self.transform:Find("Button (4)"):GetComponent("Button")
+	local btn_play_music = Self.transform:Find("Button"):GetComponent("Button")
+	local btn_stop_music = Self.transform:Find("Button (1)"):GetComponent("Button")
+	local btn_pause_music = Self.transform:Find("Button (2)"):GetComponent("Button")
+	local btn_unpause_music = Self.transform:Find("Button (3)"):GetComponent("Button")
+	local btn_play_sound = Self.transform:Find("Button (4)"):GetComponent("Button")
+	local btn_cloase = Self.transform:Find("Button (5)"):GetComponent("Button")
+	local btn_pool_test = Self.transform:Find("Button (6)"):GetComponent("Button")
 
-	local slider_music = self.transform:Find("Slider"):GetComponent("Slider")
-	local slicer_sound = self.transform:Find("Slider (1)"):GetComponent("Slider")
+	local slider_music = Self.transform:Find("Slider"):GetComponent("Slider")
+	local slicer_sound = Self.transform:Find("Slider (1)"):GetComponent("Slider")
 
     btn_play_music:OnClickSet(function()
-		print("Play Music")
 		Manager.Sound:PlayMusic("dayu.mp3")
 	end)
 
     btn_stop_music:OnClickSet(function()
-		print("Stop Music")
 		Manager.Sound:StopMusic()
 	end)
 
     btn_pause_music:OnClickSet(function()
-		print("Pause Music")
 		Manager.Sound:PauseMusic()
 	end)
 
     btn_unpause_music:OnClickSet(function()
-		print("Unpause Music")
 		Manager.Sound:UnPauseMusic()
 	end)
 
+	btn_pool_test:OnClickSet(function()
+		Manager.UI:OpenUI("Sound/TestSoundUI", "UI", "ui.TestSoundUI")
+	end)
+
+	btn_cloase:OnClickSet(function()
+		Self:OnClose();
+	end)
+
     btn_play_sound:OnClickSet(function()
-		print("Play Sound")
 		Manager.Sound:PlaySound("ui_touch.wav")
 	end)
 
     slider_music:OnValueChangedSet(function(value)
-		print("Music Volume: "..value)
 		Manager.Sound:SetMusicVolume(value)
 	end)
 
     slicer_sound:OnValueChangedSet(function(value)
-		print("Sound Volume: "..value)
 		Manager.Sound:SetSoundVolume(value)
 	end)
 

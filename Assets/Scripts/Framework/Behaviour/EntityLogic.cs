@@ -21,7 +21,7 @@ public class EntityLogic : LuaBahaviour
         m_LuaOnShow?.Invoke();
     }
 
-    public void OnClose()
+    public void OnHide()
     {
         m_LuaOnHide?.Invoke();
     }

@@ -30,7 +30,7 @@ public class PoolManager : MonoBehaviour
     /// 创建物体对象池
     /// </summary>
     /// <param name="poolNname">对象池名称</param>
-    /// <param name="releaseTime">资源释放周期</param>
+    /// <param name="releaseTime">资源释放周期(秒)</param>
     public void CreateGameObjectPool(string poolNname, int releaseTime)
     {
         CreatePool<GameObjectPool>(poolNname, releaseTime);
@@ -40,7 +40,7 @@ public class PoolManager : MonoBehaviour
     /// 创建资源对象池
     /// </summary>
     /// <param name="poolNname">对象池名称</param>
-    /// <param name="releaseTime">资源释放周期</param>
+    /// <param name="releaseTime">资源释放周期(秒)</param>
     public void CreateAssetPool(string poolNname, int releaseTime)
     {
         CreatePool<AssetPool>(poolNname, releaseTime);

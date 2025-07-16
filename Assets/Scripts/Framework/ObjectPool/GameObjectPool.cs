@@ -21,7 +21,7 @@ public class GameObjectPool : PoolBase
         base.UnSpwan(name, obj);
     }
 
-    public void Release()
+    public override void Release()
     {
         base.Release();
         foreach (var item in m_Objects)
