@@ -16,6 +16,9 @@ public class ResourceManager : MonoBehaviour
     // 存放Bundle信息
     private Dictionary<string, BundleInfo> m_BundleInfos = new Dictionary<string, BundleInfo>();
 
+    // 缓存AssetBundle资源
+    private Dictionary<string, AssetBundle> m_AssetBundles = new Dictionary<string, AssetBundle>();
+
     /// <summary>
     /// 解析版本文件
     /// </summary>
@@ -55,26 +58,48 @@ public class ResourceManager : MonoBehaviour
         string bundleName = m_BundleInfos[assteName].BundleName;
         string bundlePath = Path.Combine(PathUtil.BundleResourcePath, bundleName);
         List<string> dependences = m_BundleInfos[assteName].Dependences;
-        if (dependences != null && dependences.Count > 0)
+
+        // ab包只能加载一次，如果是音效资源需要多次调用，则把加载好的资源缓存起来取用
+        AssetBundle bundle = GetBundle(bundleName);
+        if (bundle == null)
         {
-            for (int i = 0; i < dependences.Count; i++)
-            {   // 这里加载依赖不需要资源，只加载Bundle，不需要回调
-                yield return LoadBundleAsync(dependences[i]);
+            if (dependences != null && dependences.Count > 0)
+            {
+                for (int i = 0; i < dependences.Count; i++)
+                {   // 这里加载依赖不需要资源，只加载Bundle，不需要回调
+                    yield return LoadBundleAsync(dependences[i]);
+                }
             }
+            // 把ab包加载到request.assetBundle
+            AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+            yield return request;
+            bundle = request.assetBundle;
+            m_AssetBundles[bundleName] = bundle;
         }
-        // 把ab包加载到request.assetBundle
-        AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
-        yield return request;
+
         // 场景资源不需要Asset资源，只需要加载Bundle，不需要回调asset资源
         if (assteName.EndsWith(".unity"))
         {
             action?.Invoke(null);
             yield break;
         }
-        AssetBundleRequest bundleRequest = request.assetBundle.LoadAssetAsync(assteName);
+        AssetBundleRequest bundleRequest = bundle.LoadAssetAsync(assteName);
         yield return bundleRequest;
 
         action?.Invoke(bundleRequest?.asset);
+    }
+
+    /// <summary>
+    /// 已经加载过的ab包，从缓存中获取
+    /// </summary>
+    AssetBundle GetBundle(string name)
+    {
+        AssetBundle bundle = null;
+        if (m_AssetBundles.TryGetValue(name, out bundle))
+        {
+            return bundle;
+        }
+        return null;
     }
 
 #if UNITY_EDITOR

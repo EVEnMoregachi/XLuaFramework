@@ -23,5 +23,6 @@ Manager.Entity:SetEntityGroup(entity_group)
 function Main()
 	print("hello xLua")
 	--Manager.UI:OpenUI("TestUI", "UI", "ui.TestUI")
-	Manager.Scene:LoadScene("Test01", "scene.Scene01")
+	--Manager.Scene:LoadScene("Test01", "scene.Scene01")
+	Manager.UI:OpenUI("Sound/TestSoundUI", "UI", "ui.TestSoundUI")
 end

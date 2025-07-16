@@ -1,0 +1,61 @@
+function OnInit()
+	print("Lua OnInit")
+end
+
+function OnOpen()
+	print("Lua OnOpen")
+	local btn_play_music = self.transform:Find("Button"):GetComponent("Button")
+	local btn_stop_music = self.transform:Find("Button (1)"):GetComponent("Button")
+	local btn_pause_music = self.transform:Find("Button (2)"):GetComponent("Button")
+	local btn_unpause_music = self.transform:Find("Button (3)"):GetComponent("Button")
+	local btn_play_sound = self.transform:Find("Button (4)"):GetComponent("Button")
+
+	local slider_music = self.transform:Find("Slider"):GetComponent("Slider")
+	local slicer_sound = self.transform:Find("Slider (1)"):GetComponent("Slider")
+
+    btn_play_music.onClick:AddListener(function()
+		print("Play Music")
+		Manager.Sound:PlayMusic("dayu.mp3")
+	end)
+
+    btn_stop_music.onClick:AddListener(function()
+		print("Stop Music")
+		Manager.Sound:StopMusic()
+	end)
+
+    btn_pause_music.onClick:AddListener(function()
+		print("Pause Music")
+		Manager.Sound:PauseMusic()
+	end)
+
+    btn_unpause_music.onClick:AddListener(function()
+		print("Unpause Music")
+		Manager.Sound:UnPauseMusic()
+	end)
+
+    btn_play_sound.onClick:AddListener(function()
+		print("Play Sound")
+		Manager.Sound:PlaySound("ui_touch.wav")
+	end)
+
+    slider_music.onValueChanged:AddListener(function(value)
+		print("Music Volume: "..value)
+		Manager.Sound:SetMusicVolume(value)
+	end)
+
+    slicer_sound.onValueChanged:AddListener(function(value)
+		print("Sound Volume: "..value)
+		Manager.Sound:SetSoundVolume(value)
+	end)
+
+    slider_music.value = 10000
+    slicer_sound.value = 10000
+end
+
+function Update()
+	print("Lua OnUpdate")
+end
+
+function OnClose()
+	print("Lua OnClose")
+end
