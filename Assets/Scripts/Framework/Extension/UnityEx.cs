@@ -30,7 +30,4 @@ public static class UnityEx
             func?.Call(value);
         });
     }
-
-
-
 }

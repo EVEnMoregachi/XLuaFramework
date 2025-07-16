@@ -111,6 +111,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Scripts\Framework\ObjectPool\PoolBase.cs" />
     <Compile Include="Assets\XLua\Gen\PackUnpack.cs" />
     <Compile Include="Assets\Scripts\Framework\Manager\Manager.cs" />
     <Compile Include="Assets\XLua\Examples\11_RawObject\RawObjectTest.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Assets\XLua\Gen\XLuaTest_Foo2ChildWrap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Scripts\Framework\Manager\PoolManager.cs" />
     <Compile Include="Assets\XLua\Src\RawObject.cs" />
     <Compile Include="Assets\GameStart.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
@@ -193,12 +195,14 @@
     <Compile Include="Assets\XLua\Gen\EnumWrap.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_KeyframeWrap.cs" />
     <Compile Include="Assets\XLua\Examples\08_Hotfix\StatefullTest.cs" />
+    <Compile Include="Assets\Scripts\Framework\ObjectPool\AssetPool.cs" />
     <Compile Include="Assets\XLua\Gen\Tutorial_DerivedClassExtensionsWrap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\Framework\Manager\SceneManger.cs" />
     <Compile Include="Assets\Scripts\Framework\Manager\EntityManager.cs" />
     <Compile Include="Assets\XLua\Examples\05_NoGc\NoGc.cs" />
     <Compile Include="Assets\XLua\Gen\Tutorial_DerivedClassWrap.cs" />
+    <Compile Include="Assets\Scripts\Framework\ObjectPool\GameObjectPool.cs" />
     <Compile Include="Assets\XLua\Tutorial\LoadLuaScript\ByString\ByString.cs" />
     <Compile Include="Assets\XLua\Gen\XLuaGenAutoRegister.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
@@ -210,6 +214,7 @@
     <Compile Include="Assets\XLua\Src\ObjectTranslator.cs" />
     <Compile Include="Assets\Scripts\Framework\Extension\UnityEx.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+    <Compile Include="Assets\Scripts\Framework\ObjectPool\PootObject.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_Vector4Wrap.cs" />
     <Compile Include="Assets\Scripts\Framework\Manager\ResourceManager.cs" />
   </ItemGroup>

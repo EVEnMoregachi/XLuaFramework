@@ -169,4 +169,13 @@ public class ResourceManager : MonoBehaviour
     {
         LoadAsset(assetName, action);
     }
+
+    /// <summary>
+    /// Ð¶ÔØ×ÊÔ´
+    /// </summary>
+    /// <param name="name"></param>
+    internal void UnLoadBundle(string name)
+    {
+        
+    }
 }
