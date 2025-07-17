@@ -1,0 +1,28 @@
+-- super 是父类
+function Class(super)
+    local class = nil;
+    if super then
+        class = setmetatable({}, {__index = super});
+        class.super = super;
+    else -- 创建一个有构造函数的空类
+        class = {ctor = function () end}
+    end
+    class.__index = class;
+
+    function class.new(...)
+        local instance = setmetatable({}, class);
+        local function create(inst, ...)
+            -- 如果有父类，那么递归调用父类的构造函数
+            if type(inst.super) == "table" then
+                create(inst.super, ...)
+            end
+            -- 如果有构造函数，则调用
+            if type(inst.ctor) == "function" then
+                inst:ctor(...)
+            end
+        end
+        create(instance, ...)
+        return instance;
+    end
+    return class;
+end

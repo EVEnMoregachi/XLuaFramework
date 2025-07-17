@@ -5,6 +5,11 @@ Input = CS.UnityEngine.Input
 KeyCode = CS.UnityEngine.KeyCode
 Time = CS.UnityEngine.Time
 
+
+Log = require("log")
+Json = require('rapidjson')
+
+
 local ui_group = {
 	"Main",
 	"UI",
@@ -26,10 +31,4 @@ function Main()
 	--Manager.Scene:LoadScene("Test01", "scene.Scene01")
 	--Manager.UI:OpenUI("Sound/TestSoundUI", "UI", "ui.TestSoundUI")
 
-	local rapidjson = require('rapidjson')
-	local t = rapidjson.decode('{"a":123}')
-	print(t.a)
-	t.a = 456
-	local s = rapidjson.encode(t)
-	print('json', s)
 end

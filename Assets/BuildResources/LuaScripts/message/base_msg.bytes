@@ -1,0 +1,36 @@
+local base_smg = Class()
+
+-- 消息注册
+function base_smg:add_req_res(msg_name, msg_id, ...)
+    local keys = {...}
+    -- 消息请求
+    self["req_"..msg_name] = function(self, ...)
+        local values = {...}
+        if #keys ~= #values then
+            Log.Error("参数不正确：", msg_name)
+        end
+        local send_date = {}
+        for i = 1, #keys do
+            send_date[keys[i]] = values[i]
+        end
+        msg_mgr.send_msg(msg_id, send_date)
+    end
+
+    -- 消息接收
+    if type(self["res_"..msg_name]) == "function" then
+        msg_mgr.register(msg_id, 
+            -- 回调
+            function (date)
+                local msg = Json.decode(date)
+                if msg.code ~= 0 then
+                    Log.Error("错误码：" , msg.code)
+                    return
+                end
+                self["res_"..msg_name](self, msg)
+            end)
+    else
+        Log.Error("请注册消息返回回调：" ..msg_name)
+    end
+end
+
+return base_smg

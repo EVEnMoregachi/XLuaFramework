@@ -64,6 +64,7 @@
     <Compile Include="Assets\XLua\Gen\UnityEngine_WaitForSecondsWrap.cs" />
     <Compile Include="Assets\XLua\Src\DelegateBridge.cs" />
     <Compile Include="Assets\XLua\Examples\04_LuaObjectOrented\InvokeLua.cs" />
+    <Compile Include="Assets\Scripts\Framework\Util\Log.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_AnimationClipWrap.cs" />
     <Compile Include="Assets\XLua\Gen\XLuaTest_LuaBehaviourWrap.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_Vector2Wrap.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\XLua\Src\TypeExtensions.cs" />
     <Compile Include="Assets\Scripts\Framework\Util\FileUtil.cs" />
+    <Compile Include="Assets\Scripts\Framework\Network\NetClient.cs" />
     <Compile Include="Assets\XLua\Examples\08_Hotfix\HotfixTest2.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_SkinnedMeshRendererWrap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Assets\Scripts\Framework\Extension\UnityEx.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\Framework\ObjectPool\PootObject.cs" />
+    <Compile Include="Assets\Scripts\Framework\Manager\NetManager.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngine_Vector4Wrap.cs" />
     <Compile Include="Assets\Scripts\Framework\Manager\ResourceManager.cs" />
   </ItemGroup>
