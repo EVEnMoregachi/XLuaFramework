@@ -22,7 +22,7 @@ public class NetManager : MonoBehaviour
     }
 
     // 链接服务器
-    public void OnConnectServer(string host, int port)
+    public void ConnectServer(string host, int port)
     {
         m_NetClient.OnConnectServer(host, port);
     }

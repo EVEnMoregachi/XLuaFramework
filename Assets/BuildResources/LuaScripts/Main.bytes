@@ -4,10 +4,13 @@ Vector3 = CS.UnityEngine.Vector3
 Input = CS.UnityEngine.Input
 KeyCode = CS.UnityEngine.KeyCode
 Time = CS.UnityEngine.Time
-
+AppConst = CS.AppConst
 
 Log = require("log")
 Json = require('rapidjson')
+require("class")
+base_msg = require("message.base_msg")
+msg_mgr = require("message.msg_mgr")
 
 
 local ui_group = {
@@ -27,8 +30,13 @@ Manager.Entity:SetEntityGroup(entity_group)
 
 function Main()
 	print("hello xLua")
+	msg_mgr.init()
+	Manager.Net:Init()
+	Manager.Net:ConnectServer("127.0.0.1", 8000)
+
+	
 	--Manager.UI:OpenUI("TestUI", "UI", "ui.TestUI")
 	--Manager.Scene:LoadScene("Test01", "scene.Scene01")
-	--Manager.UI:OpenUI("Sound/TestSoundUI", "UI", "ui.TestSoundUI")
+	Manager.UI:OpenUI("Sound/TestSoundUI", "UI", "ui.TestSoundUI")
 
 end

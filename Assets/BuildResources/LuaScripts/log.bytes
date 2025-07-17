@@ -53,7 +53,7 @@ function Log.Error(...)
     if not AppConst.OpenLog then
         return
     end
-    local str = get_lon_string(...)
+    local str = get_log_string(...)
     CS.Log.Error(str.. debug.traceback())
 end
 

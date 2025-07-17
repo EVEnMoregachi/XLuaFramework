@@ -6,7 +6,7 @@ local msg_response = {}
 
 -- 每个模块的名字(手动添加)
 local msg_name_list = {
-
+    "msg_test",
 }
 
 -- 初始化
