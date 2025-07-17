@@ -1,5 +1,6 @@
 local msg_test = Class(base_msg)
 
+-- 初始化构造的时候会注册请求消息
 function msg_test:ctor(...)
     self:add_req_res("first_test", 1000, "id", "user", "password", "listTest")
 end

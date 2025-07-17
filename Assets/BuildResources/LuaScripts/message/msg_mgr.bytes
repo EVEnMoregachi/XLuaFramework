@@ -1,22 +1,22 @@
 local msg_mgr = {}
--- 模块列表
+-- 网路模块列表
 local msg_model_list = {}
 -- 回调方法列表
 local msg_response = {}
 
--- 每个模块的名字(手动添加)
+-- 每个网络模块的名字(手动添加) 用于init的时候根据名字加载每个模块
 local msg_name_list = {
     "msg_test",
 }
 
--- 初始化
+-- 初始化时注册所有的网络模块
 function msg_mgr.init()
     for k,v in pairs(msg_name_list) do
         msg_model_list[v] = require("message."..v).new()
     end
 end
 
--- 获取模块
+-- 获取网络模块
 function msg_mgr.get_msg(key)
     if not msg_model_list[key] then
         Log.Error("脚本不存在：", key)
@@ -43,6 +43,9 @@ function ReceiveMessage(msg_id, msg)
     end
 end
 
+-- 发送消息
+-- @param msg_id 消息id
+-- @param send_date 发送数据(键值对)
 function msg_mgr.send_msg(msg_id, send_date)
     local str = Json.encode(send_date);
     Log.Info("发送消息："..msg_id..":"..str)

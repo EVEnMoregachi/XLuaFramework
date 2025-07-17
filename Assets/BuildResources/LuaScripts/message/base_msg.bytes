@@ -16,7 +16,7 @@ function base_smg:add_req_res(msg_name, msg_id, ...)
         msg_mgr.send_msg(msg_id, send_date)
     end
 
-    -- 消息接收
+    -- 消息接收 如果这个类有方法res_xxx
     if type(self["res_"..msg_name]) == "function" then
         msg_mgr.register(msg_id, 
             -- 回调
@@ -34,3 +34,12 @@ function base_smg:add_req_res(msg_name, msg_id, ...)
 end
 
 return base_smg
+
+--使用方法：写一个类继承自base_msg,然后重写ctor构造函数，
+--注册消息请求的name id 和参数 调用的时候从msg_mgr的msg_model_list中取出并且实列化一个需要用的类
+--然后使用  req_+<注册消息请求的name>方法  传入具体的id和参数
+
+--注册响应的时候，就是子类中写一个方法 res_xxx，在msg_mgr.init的时候就会一步步调用到base_smg:add_req_res
+--这里会注册res_xxx到msg_response(回调方法列表)
+--服务器发送回应后，msg_mgr会在msg_response  中查找是否注册了对应的消息
+--如果注册了，那么触发msg_mgr.register注册的回调方法 也就是res_xxx
