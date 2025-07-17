@@ -68,8 +68,8 @@ public class LuaManager : MonoBehaviour
             {   // 当Lua脚本异步加载完成后，将Lua脚本缓存起来
                 AddLuaScript(name, (obj as TextAsset).bytes);
                 if (m_LuaScripts.Count >= LuaNames.Count)
-                {   // 已经读取的Lua脚本数量大于等于需要加载的Lua脚本数量，即所有Lua加载完成
-                    Manager.Event.Fire(10000);
+                {   // 所有Lua加载完成:已经读取的Lua脚本数量大于等于需要加载的Lua脚本数量
+                    Manager.Event.Fire((int)GameEvent.StartLua);
                     LuaNames.Clear();
                     LuaNames = null;
                 }
@@ -92,7 +92,7 @@ public class LuaManager : MonoBehaviour
             byte[] file = File.ReadAllBytes(fileName);
             AddLuaScript(PathUtil.GetUnityPath(fileName), file);
         }
-        Manager.Event.Fire(10000);
+        Manager.Event.Fire((int)GameEvent.StartLua);
     }
 #endif
 

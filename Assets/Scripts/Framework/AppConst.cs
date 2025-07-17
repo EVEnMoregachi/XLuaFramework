@@ -23,3 +23,10 @@ public class AppConst
     // 热更资源地址
     public const string ResourcesUrl = "http://192.168.1.13/AssetBundles";
 }
+
+public enum GameEvent
+{
+    GameInit = 10000,
+    StartLua,
+}
+
