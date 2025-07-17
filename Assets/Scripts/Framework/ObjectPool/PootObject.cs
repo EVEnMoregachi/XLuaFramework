@@ -5,7 +5,7 @@ using UnityEngine;
 public class PoolObject
 {
     // 具体对象
-    public Object Objuect;
+    public Object Object;
     // 对象名字
     public string Name;
     // 最后一次使用时间
@@ -13,7 +13,7 @@ public class PoolObject
 
     public PoolObject(string name, Object obj)
     {
-        Objuect = obj;
+        Object = obj;
         Name = name;
         LastUseTime = System.DateTime.Now;
     }

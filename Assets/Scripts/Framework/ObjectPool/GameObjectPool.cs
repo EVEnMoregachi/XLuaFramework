@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameObjectPool : PoolBase
 {
@@ -24,21 +25,23 @@ public class GameObjectPool : PoolBase
     public override void Release()
     {
         base.Release();
+        List<PoolObject> removeList = new List<PoolObject>();
         foreach (var item in m_Objects)
         {
             if (System.DateTime.Now.Ticks - item.LastUseTime.Ticks >= m_ReleaseTime * 10000000)
             {
                 Debug.Log("GameObjectPool 释放时间:" + System.DateTime.Now);
-                Destroy(item.Objuect);
+                Destroy(item.Object);
 
                 // 减少Bundle和依赖的引用计数
                 Manager.Resource.MinuBundleCount(item.Name);
 
-                // 这里删除了迭代器正在迭代的元素，所以递归调用一次
-                m_Objects.Remove(item);
-                Release();
+                removeList.Add(item);
                 return;
             }
         }
+        RemoveObjects(removeList);
     }
+
+    
 }

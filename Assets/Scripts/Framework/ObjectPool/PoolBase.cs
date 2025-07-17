@@ -38,7 +38,7 @@ public class PoolBase : MonoBehaviour
             if (obj.Name == name)
             {
                 m_Objects.Remove(obj);
-                return obj.Objuect;
+                return obj.Object;
             }
         }
         return null;
@@ -68,6 +68,15 @@ public class PoolBase : MonoBehaviour
         {
             m_LastReleaseTime = System.DateTime.Now.Ticks;
             Release();
+        }
+    }
+
+
+    protected void RemoveObjects(List<PoolObject> removeList)
+    {
+        foreach (var item in removeList)
+        {
+            m_Objects.Remove(item);
         }
     }
 }
